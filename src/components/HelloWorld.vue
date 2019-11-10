@@ -3,19 +3,23 @@
     <vue-ueditor-wrap v-model="msg" :config="myConfig"></vue-ueditor-wrap>
     <button @click="save">提交</button>
     <!-- <iframe id='previewPdf' :src="pdfUrl" height="560" width="100%"></iframe> -->
-    <md-contract></md-contract>
+    <pdf-view :initPdf="loadPdf"></pdf-view>
+    <div v-html="editorContent"></div>
+    <editor v-model="editorContent"></editor>
   </div>
 </template>
 
 <script>
 import VueUeditorWrap from 'vue-ueditor-wrap'
-import mdContract from './contract.md.vue'
+import PdfView from './PdfView.vue'
+import Editor from './Editor'
 import axios from 'axios'
 export default {
   name: 'HelloWorld',
   components: {
     VueUeditorWrap,
-    mdContract
+    PdfView,
+    Editor
   },
   data () {
     return {
@@ -110,7 +114,8 @@ export default {
         // UEditor 资源文件的存放路径，如果你使用的是 vue-cli 生成的项目，通常不需要设置该选项，vue-ueditor-wrap 会自动处理常见的情况，如果需要特殊配置，参考下方的常见问题2
         UEDITOR_HOME_URL: '/service/static/UEditor/'
       },
-      pdfUrl: ''
+      pdfUrl: '1',
+      editorContent: '1'
     }
   },
   mounted () {
@@ -126,6 +131,14 @@ export default {
           type: 'application/pdf'
         })
         this.pdfUrl = '/service/static/pdf/web/viewer.html?file=' + encodeURIComponent(URL.createObjectURL(blob)) + '.pdf'
+      })
+    },
+    loadPdf () {
+      return axios({
+        method: 'post',
+        url: '/api/pdf',
+        data: {},
+        responseType: 'arraybuffer'
       })
     }
   }
