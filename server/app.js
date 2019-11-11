@@ -29,8 +29,7 @@ apiRoutes.post('/pdf', (req, res) => {
   // res.set({
   //   'Content-Type': 'application/pdf'
   // })
-  // fs.readFile('./public/nodejs.pdf', (err, data) => {
-  fs.readFile('./public/20190909.pdf', (err, data) => {
+  fs.readFile('./public/nodejs.pdf', (err, data) => {
     if (err) {
       console.log('文件读取发生错误');
     } else {

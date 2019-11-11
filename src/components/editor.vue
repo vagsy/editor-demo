@@ -23,7 +23,7 @@
     },
     methods: {
       getContent: function () {
-        alert(this.editorContent)
+        alert(this.editorContent);
         this.$emit('input', this.editorContent);
       }
     },
