@@ -4,6 +4,7 @@
     <button @click="save">提交</button>
     <!-- <iframe id='previewPdf' :src="pdfUrl" height="560" width="100%"></iframe> -->
     <pdf-view :initPdf="loadPdf"></pdf-view>
+    <!-- <pdf-view1></pdf-view1> -->
     <div v-html="editorContent"></div>
     <editor v-model="editorContent"></editor>
   </div>
@@ -12,6 +13,7 @@
 <script>
 import VueUeditorWrap from 'vue-ueditor-wrap'
 import PdfView from './PdfView.vue'
+import PdfView1 from './PdfView1.vue'
 import Editor from './Editor'
 import axios from 'axios'
 export default {
@@ -19,6 +21,7 @@ export default {
   components: {
     VueUeditorWrap,
     PdfView,
+    PdfView1,
     Editor
   },
   data () {

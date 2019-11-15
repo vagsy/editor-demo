@@ -1,4 +1,4 @@
-<!--文件流-->
+<!--文件-->
 <template>
   <div>
     <div class="pdf-view">
@@ -65,31 +65,22 @@ export default {
       reader.readAsDataURL(blob);
     },
     getPdf() {
-      let _this = this;
       // 此中方式接受流形式返回
-      _this.initPdf().then(res => {
-        let blob = new Blob([res.data], { type: "application/pdf" });
-        // let blob = new Blob([res.data], { type: 'application/octet-stream' });
-        this.blobToDataURI(blob, data => {
-          this.$refs.pdfcanvas.scrollTop = 0;
-          data = data.replace('data:application/pdf;base64,', '');
-          let pdfjsLib = pdf;
-          pdfjsLib.GlobalWorkerOptions.workerSrc = '/service/static/pdf/build/pdf.worker.js';
-          let loadingTask = pdfjsLib.getDocument({
-            data: atob(data)
-          });
+      
+        this.$refs.pdfcanvas.scrollTop = 0;
+        let url = '/service//static/test1.pdf';
+        let pdfjsLib = pdf;
+        pdfjsLib.GlobalWorkerOptions.workerSrc = '/service/static/pdf/build/pdf.worker.js';
+        let loadingTask = pdfjsLib.getDocument(url);
 
-          loadingTask.promise.then(pdf => {
-              let numPages = pdf.numPages;
-              let container = document.getElementById('pdfcanvas');
-              let pageNumber = 1;
-              _this.getPage(pdf, pageNumber, container, numPages);
-            }, reason => {
-              console.error(reason);
-            }
-          );
+        loadingTask.promise.then(pdf => {
+          let numPages = pdf.numPages;
+          let container = document.getElementById('pdfcanvas');
+          let pageNumber = 1;
+          this.getPage(pdf, pageNumber, container, numPages);
+        }, reason => {
+          console.error(reason);
         });
-      });
     }
   }
 };
